@@ -1,6 +1,6 @@
 import pdfplumber 
 
-with pdfplumber.open("example.pdf") as pdf: 
+with pdfplumber.open("example_resume.pdf") as pdf: 
 
     first_page = pdf.pages[0]
 
