@@ -8,14 +8,14 @@ import anthropic
 
 #create question and encode it to get the embedding vector for the question
 model = SentenceTransformer('all-MiniLM-L6-v2')
-question = ["what is the most recent Experience?"]
+question = ["which professional experience is most relevant for Data Science Jobs?"]
 
 question_embedding = model.encode(question)
 
 #query ChromaDB to get most similar embedding to the question 
 results = collection.query(
     query_embeddings = question_embedding.tolist(),
-    n_results = 6
+    n_results = 2
 )
 
 documents = results.get('documents') if isinstance(results, dict) else None
