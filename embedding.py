@@ -27,7 +27,7 @@ print(embeddings.shape )
 # Create a ChromaDB client
 client = chromadb.PersistentClient(path = " ./chroma_db")
 #Create a collection similar to creating a table in a traditional database 
-collection = client.create_collection(name="pdf_embeddings")
+collection = client.get_or_create_collection(name="pdf_embeddings")
 #add the data to the collection
 collection.add(
     documents = content,

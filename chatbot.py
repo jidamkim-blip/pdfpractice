@@ -8,14 +8,14 @@ import anthropic
 
 #create question and encode it to get the embedding vector for the question
 model = SentenceTransformer('all-MiniLM-L6-v2')
-question = ["what is the most recent work experience?"]
+question = ["what is the most recent Experience?"]
 
 question_embedding = model.encode(question)
 
 #query ChromaDB to get most similar embedding to the question 
 results = collection.query(
     query_embeddings = question_embedding.tolist(),
-    n_results = 3
+    n_results = 6
 )
 
 documents = results.get('documents') if isinstance(results, dict) else None
@@ -25,9 +25,13 @@ else:
     context = ""
 
 client = anthropic.Anthropic()
-client.messages.create(
-    model = "claude-opus-4-0", 
-    mes
+message = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1000,
+    system=f"You are a helpful assistant that answers questions based on the provided context.\n\nContext:\n{context}",
+    messages=[
+        {"role": "user", "content": question[0]}
+    ]
+)
 
-
-
+print(message.content[0].text)
